@@ -6,11 +6,12 @@ declare(strict_types=1);
  * Internal plugin key and installation directory: informeglopi.
  */
 
-define('PLUGIN_INFORMEGLOPI_VERSION', '0.2.0');
+define('PLUGIN_INFORMEGLOPI_VERSION', '0.3.0');
 
 require_once __DIR__ . '/src/Report.php';
 require_once __DIR__ . '/src/Profile.php';
 require_once __DIR__ . '/src/ReportTab.php';
+require_once __DIR__ . '/src/ReportService.php';
 
 function plugin_init_informeglopi(): void
 {
