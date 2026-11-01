@@ -22,7 +22,7 @@ function plugin_init_informeglopi(): void
 {
     global $PLUGIN_HOOKS;
 
-    Plugin::registerClass(\GlpiPlugin\Informeglopi\Profile::class, [
+    Plugin::registerClass(\\GlpiPlugin\\Informeglopi\\Report::class);\n\n    Plugin::registerClass(\\GlpiPlugin\\Informeglopi\\Profile::class, [
         'addtabon' => ['Profile'],
     ]);
 
