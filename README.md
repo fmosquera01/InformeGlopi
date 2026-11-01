@@ -54,6 +54,7 @@ Implementado en repositorio:
 - Consulta de historial por activo.
 - Creación de borradores desde activos compatibles.
 - Numeración anual `ITSISAAAA-NNN` reservada dentro de una transacción.
+- El contador de cada año inicia en cero en una base nueva; antes de producción debe inicializarse con el último número oficial ya utilizado para evitar duplicar informes históricos.
 - Snapshot JSON de los campos escalares disponibles del activo al momento de crear el borrador.
 - Registro de auditoría para la creación del informe.
 - Vista de lectura del borrador con los datos capturados.
