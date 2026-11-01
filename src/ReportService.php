@@ -10,8 +10,6 @@ use Throwable;
 
 final class ReportService
 {
-    private const ALLOWED_ITEMTYPES = ['Computer', 'Phone', 'Printer', 'Monitor', 'NetworkEquipment'];
-
     public static function createDraft(string $itemtype, int $itemsId): int
     {
         global $DB;
@@ -19,7 +17,7 @@ final class ReportService
         if (!Session::haveRight(Report::$rightname, CREATE)) {
             throw new RuntimeException(__('No tiene permisos para crear informes técnicos.', 'informeglopi'));
         }
-        if (!in_array($itemtype, self::ALLOWED_ITEMTYPES, true) || !class_exists($itemtype)) {
+        if (!AssetTypeRegistry::isSupported($itemtype) || !class_exists($itemtype)) {
             throw new RuntimeException(__('Tipo de activo no permitido.', 'informeglopi'));
         }
 
