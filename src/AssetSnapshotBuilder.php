@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace GlpiPlugin\Informeglopi;
 
 use CommonDBTM;
+use Glpi\\Asset\\Asset;
 
 /**
  * Builds a historical snapshot of an asset and its attached hardware.
@@ -39,6 +40,23 @@ final class AssetSnapshotBuilder
             'fields'         => $fields,
             'components'     => [],
         ];
+
+        if (is_a($item, Asset::class)) {
+            $snapshot['asset_definition'] = [
+                'system_name' => $item::getDefinition()->fields['system_name'] ?? null,
+                'name' => $item::getDefinition()->getTranslatedName(),
+            ];
+            $customFields = $item->fields['custom_fields'] ?? null;
+            if (is_string($customFields) && $customFields !== '') {
+                $decoded = json_decode($customFields, true);
+                $snapshot['custom_fields'] = is_array($decoded) ? $decoded : [];
+            }
+            foreach ($item->fields as $key => $value) {
+                if (str_starts_with((string) $key, 'custom_') && (is_scalar($value) || $value === null)) {
+                    $snapshot['custom_fields'][(string) $key] = $value;
+                }
+            }
+        }
 
         if ($itemtype === 'Computer') {
             foreach (self::DEVICE_RELATIONS as $key => $relationClass) {
