@@ -53,7 +53,10 @@ final class ReportTab extends CommonGLPI
         echo "<div class='card mb-3'><div class='card-header d-flex justify-content-between align-items-center'>";
         echo '<strong>' . htmlspecialchars(__('Historial de informes técnicos', 'informeglopi'), ENT_QUOTES, 'UTF-8') . '</strong>';
 
-        echo "<span class='text-muted small'>" . htmlspecialchars(__('Creación de informes: siguiente etapa de desarrollo', 'informeglopi'), ENT_QUOTES, 'UTF-8') . '</span>';
+        if (\\Session::haveRight(Report::$rightname, CREATE)) {
+            $createUrl = '/plugins/informeglopi/front/report.form.php?itemtype=' . rawurlencode($itemtype) . '&items_id=' . $itemsId;
+            echo "<a class='btn btn-primary btn-sm' href='" . htmlspecialchars($createUrl, ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars(__('Nuevo informe', 'informeglopi'), ENT_QUOTES, 'UTF-8') . '</a>';
+        }
         echo '</div><div class="card-body">';
 
         if ($reports === []) {
