@@ -4,23 +4,12 @@ declare(strict_types=1);
 namespace GlpiPlugin\Informeglopi;
 
 use CommonGLPI;
-use Computer;
-use Monitor;
-use NetworkEquipment;
-use Phone;
-use Printer;
 
 /**
- * Native "Informes técnicos" tab on supported GLPI assets.
- * This first iteration exposes the per-asset history without altering
- * the institutional Word/PDF layout.
+ * History tab shared by all native GLPI assets and Asset Definitions.
  */
 final class ReportTab extends CommonGLPI
 {
-    private const ITEMTYPES = [
-        'Computer', 'Phone', 'Printer', 'Monitor', 'NetworkEquipment',
-    ];
-
     public static function getTypeName($nb = 0): string
     {
         return __('Informes técnicos', 'informeglopi');
@@ -28,7 +17,7 @@ final class ReportTab extends CommonGLPI
 
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
-        if ($withtemplate || !in_array($item::class, self::ITEMTYPES, true)) {
+        if ($withtemplate || !AssetTypeRegistry::isSupported($item::class)) {
             return '';
         }
 
@@ -37,11 +26,11 @@ final class ReportTab extends CommonGLPI
 
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
-        if (!in_array($item::class, self::ITEMTYPES, true)) {
+        if (!AssetTypeRegistry::isSupported($item::class)) {
             return true;
         }
 
-        if (!\Session::haveRight(Report::$rightname, READ)) {
+        if (!\\Session::haveRight(Report::$rightname, READ)) {
             echo "<div class='alert alert-warning'>" . htmlspecialchars(__('No tiene permisos para consultar informes técnicos.', 'informeglopi'), ENT_QUOTES, 'UTF-8') . '</div>';
             return true;
         }
@@ -53,7 +42,7 @@ final class ReportTab extends CommonGLPI
         echo "<div class='card mb-3'><div class='card-header d-flex justify-content-between align-items-center'>";
         echo '<strong>' . htmlspecialchars(__('Historial de informes técnicos', 'informeglopi'), ENT_QUOTES, 'UTF-8') . '</strong>';
 
-        if (\Session::haveRight(Report::$rightname, CREATE)) {
+        if (\\Session::haveRight(Report::$rightname, CREATE)) {
             $createUrl = '/plugins/informeglopi/front/report.form.php?itemtype=' . rawurlencode($itemtype) . '&items_id=' . $itemsId;
             echo "<a class='btn btn-primary btn-sm' href='" . htmlspecialchars($createUrl, ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars(__('Nuevo informe', 'informeglopi'), ENT_QUOTES, 'UTF-8') . '</a>';
         }
@@ -96,13 +85,8 @@ final class ReportTab extends CommonGLPI
         $result = [];
         foreach ($DB->request([
             'SELECT' => [
-                'id',
-                'report_number',
-                'status',
-                'date_creation',
-                'users_id',
-                'entities_id',
-                'is_recursive',
+                'id', 'report_number', 'status', 'date_creation',
+                'users_id', 'entities_id', 'is_recursive',
             ],
             'FROM' => 'glpi_plugin_informeglopi_reports',
             'WHERE' => [
@@ -111,12 +95,13 @@ final class ReportTab extends CommonGLPI
             ],
             'ORDER' => ['id DESC'],
         ]) as $row) {
-            if (!\Session::haveAccessToEntity(
+            if (!\\Session::haveAccessToEntity(
                 (int) ($row['entities_id'] ?? -1),
                 (bool) ($row['is_recursive'] ?? false)
             )) {
                 continue;
             }
+
             $row['creator_name'] = '—';
             $userId = (int) ($row['users_id'] ?? 0);
             if ($userId > 0) {
