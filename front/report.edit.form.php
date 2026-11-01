@@ -31,6 +31,7 @@ if (!$canEdit || ($report->fields['status'] ?? '') !== 'draft') {
     Html::displayRightError();
 }
 
+$errorMessage = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         ReportService::updateDraft($reportId, $_POST);
@@ -38,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         Html::redirect($CFG_GLPI['root_doc'] . '/plugins/informeglopi/front/report.php?id=' . $reportId);
         exit;
     } catch (Throwable $e) {
-        Session::addMessageAfterRedirect($e->getMessage(), false, ERROR);
+        $errorMessage = $e->getMessage();
     }
 }
 
