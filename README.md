@@ -1,61 +1,64 @@
 # Informe Técnico - Songa
 
-Plugin nativo para **GLPI 11**, destinado a elaborar, firmar, consultar y conservar informes técnicos asociados a los activos de Songa.
+Plugin nativo para GLPI 11. Directorio interno: `informeglopi`.
 
-- Repositorio: https://github.com/fmosquera01/InformeGlopi
-- Clave interna del plugin: `informeglopi`
-- Directorio de instalación en GLPI: `plugins/informeglopi`
-- Versión inicial de desarrollo: `0.1.0`
-- Plataforma objetivo: GLPI 11.x / PHP 8.2+
+## Objetivo
 
-> Este repositorio está en etapa de construcción. La versión inicial contiene únicamente el arranque y los metadatos del plugin; todavía no crea tablas ni presenta funcionalidades operativas.
+Gestionar el ciclo de vida del documento institucional **Informe Técnico de Ítems de Propiedad, Planta y Equipos**, vinculado al activo GLPI. Cada informe es un registro independiente y conserva una fotografía histórica de los datos del activo al momento de su elaboración.
 
-## Requisitos funcionales acordados
+## Reglas funcionales acordadas
 
-1. Pestaña **Informes técnicos** en los activos GLPI compatibles.
-2. Múltiples informes por activo, con historial consultable y sin sobrescribir documentos anteriores.
-3. Recuperación de datos del activo desde GLPI y conservación de una fotografía histórica de esos datos al crear el informe.
-4. Descripción detallada del activo y de sus componentes, para facilitar verificaciones patrimoniales y procesos de baja.
-5. Valor en libros ingresado manualmente por el técnico, porque lo proporciona otra área.
-6. Clasificación del daño seleccionable: **Daño a la propiedad** o **Desgaste**. El PDF debe mostrar una X en la opción elegida.
-7. Respeto estricto al formato institucional aprobado por Gestión Documental. No se rediseñará la plantilla sin autorización.
-8. Evidencias fotográficas adjuntas al informe.
-9. Flujo de borrador, firma del técnico, firma del supervisor/administrador y finalización.
-10. Tras la firma final, el PDF y los datos firmados quedan bloqueados; se conserva una huella SHA-256.
-11. Integración exclusiva con los perfiles y permisos nativos de GLPI 11. No se implementará un ACL paralelo.
-12. Historial de acciones y firmas con usuario y fecha/hora.
+- Un activo puede tener múltiples informes; el historial no sobrescribe documentos anteriores.
+- El formato institucional aprobado debe reproducirse sin alterar encabezados, títulos, distribución, firmas ni estructura.
+- Los datos del activo y sus componentes se guardan como snapshot histórico.
+- El valor en libros se ingresa manualmente por el personal autorizado y conserva usuario y fecha de registro.
+- Tipo de daño: **Daño a la propiedad** o **Desgaste**. Puede cambiarse durante el borrador y se bloquea al finalizar.
+- Evidencias fotográficas múltiples, con categoría, autor y checksum.
+- Firmas de técnico y supervisor/administrador, con usuario, fecha y checksum de la imagen.
+- Flujo previsto: Borrador → Firma técnico → Firma supervisor/administrador → Finalizado.
+- El PDF final se conserva con SHA-256 y no debe regenerarse ni modificarse después de finalizar.
+- Los permisos se integran exclusivamente con perfiles y derechos nativos de GLPI; no existe ACL paralela.
+- La desinstalación del plugin no elimina los informes ni sus tablas.
 
-## Estructura prevista
+## Estructura actual
 
-```text
-informeglopi/
-├── setup.php
-├── hook.php
-├── README.md
-├── CHANGELOG.md
-├── front/
-├── src/
-├── templates/
-├── css/
-├── js/
-├── pics/
-├── locales/
-└── install/
-```
+- `setup.php`: metadatos, inicialización y registro de pestañas.
+- `hook.php`: creación idempotente de tablas y registro de derechos nativos.
+- `src/Profile.php`: pestaña de derechos en Administración → Perfiles.
+- `src/Report.php`: entidad CommonDBTM del informe.
+- `src/ReportTab.php`: pestaña de historial en activos compatibles.
+- `front/report.php`: vista inicial de un informe.
+- `README.md`, `CHANGELOG.md`.
 
-La estructura se ampliará siguiendo las convenciones oficiales de desarrollo de plugins GLPI 11.
+## Modelo de datos inicial (v0.2.0)
 
-## Instalación de desarrollo
+- `glpi_plugin_informeglopi_sequences`: correlativo anual.
+- `glpi_plugin_informeglopi_reports`: informe, estado, campos manuales, snapshot JSON y metadatos del PDF.
+- `glpi_plugin_informeglopi_signatures`: firmas técnico/supervisor.
+- `glpi_plugin_informeglopi_evidences`: fotografías y archivos de evidencia.
+- `glpi_plugin_informeglopi_history`: auditoría de acciones y cambios.
 
-1. Copiar el directorio del plugin a `<GLPI_ROOT>/plugins/informeglopi`.
-2. Verificar que GLPI detecte **Informe Técnico** en Configuración/Plugins.
-3. Instalar y activar desde la interfaz de GLPI.
+Las relaciones se gestionan desde el plugin y no se crean claves foráneas hacia tablas GLPI, para mantener compatibilidad con el ciclo de vida de sus activos.
 
-La base actual no crea tablas ni modifica perfiles. Esa parte se añadirá junto con las clases y migraciones correspondientes.
+## Estado de desarrollo
 
-## Decisiones de integridad documental
+**Versión 0.2.0 — base funcional en construcción.**
 
-- Los informes finalizados no se editan ni se reemplazan.
-- Un informe nuevo crea un registro independiente, incluso si el activo ya tiene informes anteriores.
-- La información de inventario usada en el informe se conserva como snapshot; no se reconstruye desde el estado actual del activo.
-- La plantilla institucional será tratada como documento controlado.
+Implementado en repositorio:
+- Registro de pestaña de informes para Computer, Phone, Printer, Monitor y NetworkEquipment.
+- Pestaña de permisos en perfiles GLPI con derechos de consulta/edición y aprobación.
+- Esquema inicial de informes, correlativos, firmas, evidencias y auditoría.
+- Consulta de historial por activo.
+- Conservación de tablas al desinstalar.
+
+Pendiente:
+- Formulario de creación/edición de borradores y numeración transaccional.
+- Captura genérica de activos y componentes por itemtype.
+- Gestión de evidencias y firmas.
+- Máquina de estados y bloqueo de registros firmados.
+- Generación del PDF respetando exactamente la plantilla documental oficial.
+- Pruebas de instalación y funcionamiento en una instancia GLPI 11.
+
+## Requisito documental pendiente
+
+Para reproducir el formato sin desviaciones, el desarrollo del PDF debe basarse en la plantilla institucional oficial en blanco (.docx), además de los dos ejemplos ya descritos. No se debe inventar ni rediseñar la plantilla.
