@@ -49,6 +49,9 @@ $damageType = (string) ($report->fields['damage_type'] ?? '');
 Html::header(__('Editar borrador', 'informeglopi'), $_SERVER['PHP_SELF'], 'assets', 'computer');
 
 echo "<div class='card'><div class='card-header'><h3 class='card-title'>" . $e($report->fields['report_number'] ?? '') . "</h3></div><div class='card-body'>";
+if ($errorMessage !== '') {
+    echo "<div class='alert alert-danger'>" . $e($errorMessage) . '</div>';
+}
 echo "<form method='post' action=''>";
 echo Html::hidden('_glpi_csrf_token', ['value' => Session::getNewCSRFToken()]);
 echo Html::hidden('id', ['value' => $reportId]);
