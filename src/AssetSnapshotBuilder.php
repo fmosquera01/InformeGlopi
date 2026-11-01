@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace GlpiPlugin\\Informeglopi;
+namespace GlpiPlugin\Informeglopi;
 
 use CommonDBTM;
 
@@ -155,7 +155,7 @@ final class AssetSnapshotBuilder
             $osId = (int) ($relation[$osIdField] ?? 0);
             $osFields = [];
             if ($osId > 0 && class_exists('OperatingSystem')) {
-                $os = new \\OperatingSystem();
+                $os = new \OperatingSystem();
                 if ($os->getFromDB($osId)) {
                     $osFields = self::scalarFields($os->fields ?? []);
                 }
