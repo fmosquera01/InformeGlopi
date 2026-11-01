@@ -59,11 +59,16 @@ final class ReportService
         $DB->beginTransaction();
         try {
             $DB->query("INSERT IGNORE INTO glpi_plugin_informeglopi_sequences (year, last_number) VALUES ({$year}, 0)");
-            $DB->query("UPDATE glpi_plugin_informeglopi_sequences SET last_number = LAST_INSERT_ID(last_number + 1) WHERE year = {$year}");
+            $DB->query("UPDATE glpi_plugin_informeglopi_sequences SET last_number = last_number + 1 WHERE year = {$year}");
 
             $sequence = 0;
-            foreach ($DB->request(['SELECT' => ['LAST_INSERT_ID() AS sequence']]) as $row) {
-                $sequence = (int) ($row['sequence'] ?? 0);
+            foreach ($DB->request([
+                'SELECT' => ['last_number'],
+                'FROM' => 'glpi_plugin_informeglopi_sequences',
+                'WHERE' => ['year' => $year],
+                'LIMIT' => 1,
+            ]) as $row) {
+                $sequence = (int) ($row['last_number'] ?? 0);
                 break;
             }
             if ($sequence < 1) {
@@ -83,7 +88,12 @@ final class ReportService
             ]);
 
             $reportId = 0;
-            foreach ($DB->request(['SELECT' => ['LAST_INSERT_ID() AS id']]) as $row) {
+            foreach ($DB->request([
+                'SELECT' => ['id'],
+                'FROM' => 'glpi_plugin_informeglopi_reports',
+                'WHERE' => ['report_number' => $reportNumber],
+                'LIMIT' => 1,
+            ]) as $row) {
                 $reportId = (int) ($row['id'] ?? 0);
                 break;
             }
