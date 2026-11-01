@@ -14,13 +14,14 @@ if (!Session::haveRight('plugin_informeglopi', CREATE)) {
     Html::displayRightError();
 }
 
+$errorMessage = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $createdId = ReportService::createDraft($itemtype, $itemsId);
         Html::redirect($CFG_GLPI['root_doc'] . '/plugins/informeglopi/front/report.php?id=' . $createdId);
         exit;
     } catch (Throwable $e) {
-        Session::addMessageAfterRedirect($e->getMessage(), false, ERROR);
+        $errorMessage = $e->getMessage();
     }
 }
 
@@ -38,6 +39,9 @@ Html::header(__('Nuevo informe técnico', 'informeglopi'), $_SERVER['PHP_SELF'],
 
 echo "<div class='card'><div class='card-header'><h3 class='card-title'>" . htmlspecialchars(__('Crear informe técnico', 'informeglopi'), ENT_QUOTES, 'UTF-8') . "</h3></div>";
 echo "<div class='card-body'>";
+if ($errorMessage !== '') {
+    echo "<div class='alert alert-danger'>" . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+}
 echo "<div class='alert alert-info'>" . htmlspecialchars(__('Se creará un nuevo borrador y se guardará una copia de los datos actuales del activo. Los informes anteriores no se modificarán.', 'informeglopi'), ENT_QUOTES, 'UTF-8') . "</div>";
 echo "<dl class='row'>";
 echo "<dt class='col-sm-3'>" . htmlspecialchars(__('Tipo de activo', 'informeglopi'), ENT_QUOTES, 'UTF-8') . "</dt><dd class='col-sm-9'>" . htmlspecialchars($itemtype, ENT_QUOTES, 'UTF-8') . "</dd>";
