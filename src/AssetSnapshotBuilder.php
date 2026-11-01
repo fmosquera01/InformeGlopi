@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace GlpiPlugin\Informeglopi;
 
 use CommonDBTM;
-use Glpi\\Asset\\Asset;
+use Glpi\Asset\Asset;
 
 /**
  * Builds a historical snapshot of an asset and its attached hardware.
