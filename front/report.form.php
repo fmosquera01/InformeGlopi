@@ -25,8 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$allowed = ['Computer', 'Phone', 'Printer', 'Monitor', 'NetworkEquipment'];
-if (!in_array($itemtype, $allowed, true) || $itemsId < 1) {
+if (!AssetTypeRegistry::isSupported($itemtype) || $itemsId < 1 || !class_exists($itemtype)) {
     Html::displayErrorAndDie(__('Activo no válido para crear un informe técnico.', 'informeglopi'));
 }
 
