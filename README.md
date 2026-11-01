@@ -81,3 +81,10 @@ Para reproducir el formato sin desviaciones, el desarrollo del PDF debe basarse 
 El snapshot de los computadores ahora incluye las relaciones de hardware consultadas a través de las clases de relación nativas de GLPI. Cada componente guarda los datos de la relación y los campos escalares del dispositivo asociado. Los discos y sistemas operativos se capturan por separado. Esta información queda serializada en el informe al momento de crear el borrador; no se vuelve a consultar para representar informes históricos.
 
 **Alcance pendiente:** validar la captura en una instancia GLPI 11.0.7 real con equipos que tengan componentes inventariados. La presencia de componentes depende de que GLPI Agent/inventario haya registrado esas relaciones. Los activos `industrial` y otros tipos personalizados todavía no están habilitados.
+
+
+## Versión 0.5.0 — Compatibilidad con todos los activos
+
+La pestaña de informes deja de depender de una lista cerrada de cinco tipos. El registro de tipos resuelve los activos nativos de GLPI 11 y consulta `AssetDefinitionManager` para descubrir las clases concretas generadas por cada definición activa de Asset Definitions. La creación del informe valida contra ese registro común. Para los activos genéricos se conserva también la definición asociada y los campos personalizados que GLPI expone en el registro del activo.
+
+La cobertura de componentes especializados continúa siendo específica de los activos que disponen de esas relaciones (por ahora, computadores). Para el resto se conserva el conjunto de campos y valores personalizados que GLPI proporciona. Debe validarse con definiciones reales y perfiles/entidades de la instancia de pruebas antes de producción.
