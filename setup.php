@@ -11,6 +11,7 @@ define('PLUGIN_INFORMEGLOPI_VERSION', '0.3.0');
 require_once __DIR__ . '/src/Report.php';
 require_once __DIR__ . '/src/Profile.php';
 require_once __DIR__ . '/src/ReportTab.php';
+require_once __DIR__ . '/src/AssetSnapshotBuilder.php';
 require_once __DIR__ . '/src/ReportService.php';
 
 function plugin_init_informeglopi(): void
