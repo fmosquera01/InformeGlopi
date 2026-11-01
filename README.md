@@ -26,6 +26,8 @@ Gestionar el ciclo de vida del documento institucional **Informe Técnico de Ít
 - `hook.php`: creación idempotente de tablas y registro de derechos nativos.
 - `src/Profile.php`: pestaña de derechos en Administración → Perfiles.
 - `src/Report.php`: entidad CommonDBTM del informe.
+- `src/ReportService.php`: creación transaccional, correlativo anual y snapshot inicial del activo.
+- `front/report.form.php`: formulario para iniciar un borrador desde la ficha del activo.
 - `src/ReportTab.php`: pestaña de historial en activos compatibles.
 - `front/report.php`: vista inicial de un informe.
 - `README.md`, `CHANGELOG.md`.
@@ -42,17 +44,22 @@ Las relaciones se gestionan desde el plugin y no se crean claves foráneas hacia
 
 ## Estado de desarrollo
 
-**Versión 0.2.0 — base funcional en construcción.**
+**Versión 0.3.0 — creación inicial de borradores.**
 
 Implementado en repositorio:
 - Registro de pestaña de informes para Computer, Phone, Printer, Monitor y NetworkEquipment.
 - Pestaña de permisos en perfiles GLPI con derechos de consulta/edición y aprobación.
 - Esquema inicial de informes, correlativos, firmas, evidencias y auditoría.
 - Consulta de historial por activo.
+- Creación de borradores desde activos compatibles.
+- Numeración anual `ITSISAAAA-NNN` reservada dentro de una transacción.
+- Snapshot JSON de los campos escalares disponibles del activo al momento de crear el borrador.
+- Registro de auditoría para la creación del informe.
+- Vista de lectura del borrador con los datos capturados.
 - Conservación de tablas al desinstalar.
 
 Pendiente:
-- Formulario de creación/edición de borradores y numeración transaccional.
+- Edición de campos técnicos/manuales del borrador.
 - Captura genérica de activos y componentes por itemtype.
 - Gestión de evidencias y firmas.
 - Máquina de estados y bloqueo de registros firmados.
