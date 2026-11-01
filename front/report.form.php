@@ -53,7 +53,7 @@ echo Html::hidden('_glpi_csrf_token', ['value' => Session::getNewCSRFToken()]);
 echo Html::hidden('itemtype', ['value' => $itemtype]);
 echo Html::hidden('items_id', ['value' => $itemsId]);
 echo "<button type='submit' class='btn btn-primary'>" . htmlspecialchars(__('Crear borrador', 'informeglopi'), ENT_QUOTES, 'UTF-8') . "</button> ";
-echo "<a class='btn btn-secondary' href='" . htmlspecialchars($CFG_GLPI['root_doc'] . '/front/' . strtolower($itemtype) . '.form.php?id=' . $itemsId, ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars(__('Cancelar', 'informeglopi'), ENT_QUOTES, 'UTF-8') . "</a>";
+echo "<a class='btn btn-secondary' href='" . htmlspecialchars($item->getFormURLWithID($itemsId), ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars(__('Cancelar', 'informeglopi'), ENT_QUOTES, 'UTF-8') . "</a>";
 echo "</form></div></div>";
 
 Html::footer();
