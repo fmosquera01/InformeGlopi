@@ -83,6 +83,10 @@ El snapshot de los computadores ahora incluye las relaciones de hardware consult
 **Alcance pendiente:** validar la captura en una instancia GLPI 11.0.7 real con equipos que tengan componentes inventariados. La presencia de componentes depende de que GLPI Agent/inventario haya registrado esas relaciones. Los activos `industrial` y otros tipos personalizados todavía no están habilitados.
 
 
+## Versión 0.5.1 — Ajustes de registro dinámico
+
+Se corrige el registro de pestañas para usar el registro dinámico de tipos y se ajusta el acceso de retorno a la ficha del activo genérico.
+
 ## Versión 0.5.0 — Compatibilidad con todos los activos
 
 La pestaña de informes deja de depender de una lista cerrada de cinco tipos. El registro de tipos resuelve los activos nativos de GLPI 11 y consulta `AssetDefinitionManager` para descubrir las clases concretas generadas por cada definición activa de Asset Definitions. La creación del informe valida contra ese registro común. Para los activos genéricos se conserva también la definición asociada y los campos personalizados que GLPI expone en el registro del activo.
