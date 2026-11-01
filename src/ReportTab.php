@@ -93,31 +93,38 @@ final class ReportTab extends CommonGLPI
     {
         global $DB;
 
-        $rows = $DB->request([
+        $result = [];
+        foreach ($DB->request([
             'SELECT' => [
-                'r.id',
-                'r.report_number',
-                'r.status',
-                'r.date_creation',
-                'u.name AS creator_name',
+                'id',
+                'report_number',
+                'status',
+                'date_creation',
+                'users_id',
             ],
             'FROM' => 'glpi_plugin_informeglopi_reports',
-            'AS' => 'r',
-            'LEFT JOIN' => [
-                'glpi_users' => [
-                    'ON' => [
-                        'r' => 'users_id',
-                        'glpi_users' => 'id',
-                    ],
-                ],
-            ],
             'WHERE' => [
-                'r.itemtype' => $itemtype,
-                'r.items_id' => $itemsId,
+                'itemtype' => $itemtype,
+                'items_id' => $itemsId,
             ],
-            'ORDER' => ['r.id DESC'],
-        ]);
+            'ORDER' => ['id DESC'],
+        ]) as $row) {
+            $row['creator_name'] = '—';
+            $userId = (int) ($row['users_id'] ?? 0);
+            if ($userId > 0) {
+                foreach ($DB->request([
+                    'SELECT' => ['name'],
+                    'FROM' => 'glpi_users',
+                    'WHERE' => ['id' => $userId],
+                    'LIMIT' => 1,
+                ]) as $user) {
+                    $row['creator_name'] = (string) ($user['name'] ?? '—');
+                    break;
+                }
+            }
+            $result[] = $row;
+        }
 
-        return iterator_to_array($rows, false);
+        return $result;
     }
 }
