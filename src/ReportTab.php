@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace GlpiPlugin\\Informeglopi;
+namespace GlpiPlugin\Informeglopi;
 
 use CommonGLPI;
 use Computer;
@@ -41,7 +41,7 @@ final class ReportTab extends CommonGLPI
             return true;
         }
 
-        if (!\\Session::haveRight(Report::$rightname, READ)) {
+        if (!\Session::haveRight(Report::$rightname, READ)) {
             echo "<div class='alert alert-warning'>" . htmlspecialchars(__('No tiene permisos para consultar informes técnicos.', 'informeglopi'), ENT_QUOTES, 'UTF-8') . '</div>';
             return true;
         }
