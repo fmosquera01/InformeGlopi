@@ -26,7 +26,7 @@ function plugin_init_informeglopi(): void
         'addtabon' => ['Profile'],
     ]);
     Plugin::registerClass(\GlpiPlugin\Informeglopi\ReportTab::class, [
-        'addtabon' => \\GlpiPlugin\\Informeglopi\\AssetTypeRegistry::getItemtypes(),
+        'addtabon' => \GlpiPlugin\Informeglopi\AssetTypeRegistry::getItemtypes(),
     ]);
 }
 
