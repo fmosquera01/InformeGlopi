@@ -33,7 +33,7 @@ Gestionar el ciclo de vida del documento institucional **Informe Técnico de Ít
 - `front/report.php`: vista inicial de un informe.
 - `README.md`, `CHANGELOG.md`.
 
-## Modelo de datos inicial (v0.2.0)
+## Modelo de datos inicial (v0.3.0)
 
 - `glpi_plugin_informeglopi_sequences`: correlativo anual.
 - `glpi_plugin_informeglopi_reports`: informe, estado, campos manuales, snapshot JSON y metadatos del PDF.
@@ -64,10 +64,8 @@ Implementado en repositorio:
 Pendiente:
 - Snapshot ampliado de componentes y relaciones de hardware por tipo de activo.
 - Integración del tipo de activo industrial personalizado.
+- Gestión de evidencias fotográficas y sus checksums.
 - Firmas, aprobación, bloqueo y generación del PDF institucional.
-- Captura genérica de activos y componentes por itemtype.
-- Gestión de evidencias y firmas.
-- Máquina de estados y bloqueo de registros firmados.
 - Generación del PDF respetando exactamente la plantilla documental oficial.
 - Pruebas de instalación y funcionamiento en una instancia GLPI 11.
 
