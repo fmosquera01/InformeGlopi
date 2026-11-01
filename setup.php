@@ -22,11 +22,11 @@ function plugin_init_informeglopi(): void
 {
     global $PLUGIN_HOOKS;
 
-    Plugin::registerClass(\\GlpiPlugin\\Informeglopi\\Profile::class, [
+    Plugin::registerClass(\GlpiPlugin\Informeglopi\Profile::class, [
         'addtabon' => ['Profile'],
     ]);
 
-    Plugin::registerClass(\\GlpiPlugin\\Informeglopi\\ReportTab::class, [
+    Plugin::registerClass(\GlpiPlugin\Informeglopi\ReportTab::class, [
         'addtabon' => [
             'Computer', 'Phone', 'Printer', 'Monitor', 'NetworkEquipment',
         ],
