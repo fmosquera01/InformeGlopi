@@ -26,7 +26,8 @@ Gestionar el ciclo de vida del documento institucional **Informe Técnico de Ít
 - `hook.php`: creación idempotente de tablas y registro de derechos nativos.
 - `src/Profile.php`: pestaña de derechos en Administración → Perfiles.
 - `src/Report.php`: entidad CommonDBTM del informe.
-- `src/ReportService.php`: creación transaccional, correlativo anual y snapshot inicial del activo.
+- `src/AssetSnapshotBuilder.php`: captura los campos escalares del activo y, para computadores, procesadores, memorias, discos, tarjetas de red/MAC, gráficos, sonido, controladoras, baterías y sistemas operativos relacionados.
+- `src/ReportService.php`: creación transaccional, correlativo anual y snapshot histórico del activo y sus componentes.
 - `front/report.form.php`: formulario para iniciar un borrador desde la ficha del activo.
 - `front/report.edit.form.php`: edición de los campos técnicos mientras el informe está en borrador.
 - `src/ReportTab.php`: pestaña de historial en activos compatibles.
@@ -73,3 +74,10 @@ Pendiente:
 ## Requisito documental pendiente
 
 Para reproducir el formato sin desviaciones, el desarrollo del PDF debe basarse en la plantilla institucional oficial en blanco (.docx), además de los dos ejemplos ya descritos. No se debe inventar ni rediseñar la plantilla.
+
+
+## Versión 0.4.0 — Snapshot ampliado
+
+El snapshot de los computadores ahora incluye las relaciones de hardware consultadas a través de las clases de relación nativas de GLPI. Cada componente guarda los datos de la relación y los campos escalares del dispositivo asociado. Los discos y sistemas operativos se capturan por separado. Esta información queda serializada en el informe al momento de crear el borrador; no se vuelve a consultar para representar informes históricos.
+
+**Alcance pendiente:** validar la captura en una instancia GLPI 11.0.7 real con equipos que tengan componentes inventariados. La presencia de componentes depende de que GLPI Agent/inventario haya registrado esas relaciones. Los activos `industrial` y otros tipos personalizados todavía no están habilitados.
