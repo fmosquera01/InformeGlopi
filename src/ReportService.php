@@ -165,12 +165,16 @@ final class ReportService
 
         $textFields = ['background', 'diagnosis', 'cause', 'activities', 'recommendations', 'observations'];
         $changes = [];
+        $oldBookValue = (string) ($report->fields['book_value'] ?? '');
+        $bookValueChanged = (string) ($bookValue ?? '') !== $oldBookValue;
         $updates = [
             'damage_type' => $damageType !== '' ? $damageType : null,
             'book_value' => $bookValue,
-            'book_value_users_id' => $bookValue !== null ? $userId : null,
-            'book_value_date' => $bookValue !== null ? date('Y-m-d H:i:s') : null,
         ];
+        if ($bookValueChanged) {
+            $updates['book_value_users_id'] = $bookValue !== null ? $userId : null;
+            $updates['book_value_date'] = $bookValue !== null ? date('Y-m-d H:i:s') : null;
+        }
 
         foreach ($textFields as $field) {
             $value = trim((string) ($input[$field] ?? ''));
@@ -188,8 +192,7 @@ final class ReportService
         if ($damageType !== $oldDamage) {
             $changes['damage_type'] = ['before' => $oldDamage, 'after' => $damageType];
         }
-        $oldBookValue = (string) ($report->fields['book_value'] ?? '');
-        if ((string) ($bookValue ?? '') !== $oldBookValue) {
+        if ($bookValueChanged) {
             $changes['book_value'] = ['before' => $oldBookValue, 'after' => (string) ($bookValue ?? '')];
         }
 
