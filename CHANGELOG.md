@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.0 - Activos nativos y Asset Definitions
+- Se incorpora un registro dinámico de activos nativos y clases generadas por Asset Definitions activas.
+- La pestaña de historial y el servicio de creación usan el mismo registro, eliminando la allowlist cerrada de cinco tipos.
+- Se capturan la definición asociada y los campos personalizados de los activos genéricos.
+- Se amplía la lista de tipos nativos contemplados en GLPI 11.
+
+
 ## 0.4.0 - Snapshot detallado de componentes
 - Se incorpora `AssetSnapshotBuilder` para separar la captura histórica de datos del servicio de informes.
 - En computadores se capturan procesadores, memorias, discos, tarjetas de red y MAC, gráficos, sonido, controladoras, baterías y sistemas operativos relacionados.
