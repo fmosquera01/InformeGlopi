@@ -28,6 +28,7 @@ Gestionar el ciclo de vida del documento institucional **Informe Técnico de Ít
 - `src/Report.php`: entidad CommonDBTM del informe.
 - `src/ReportService.php`: creación transaccional, correlativo anual y snapshot inicial del activo.
 - `front/report.form.php`: formulario para iniciar un borrador desde la ficha del activo.
+- `front/report.edit.form.php`: edición de los campos técnicos mientras el informe está en borrador.
 - `src/ReportTab.php`: pestaña de historial en activos compatibles.
 - `front/report.php`: vista inicial de un informe.
 - `README.md`, `CHANGELOG.md`.
@@ -56,10 +57,14 @@ Implementado en repositorio:
 - Snapshot JSON de los campos escalares disponibles del activo al momento de crear el borrador.
 - Registro de auditoría para la creación del informe.
 - Vista de lectura del borrador con los datos capturados.
+- Edición del borrador por su creador o por perfiles con derecho de actualización.
+- Clasificación de daño/desgaste y registro del valor en libros con usuario y fecha.
 - Conservación de tablas al desinstalar.
 
 Pendiente:
-- Edición de campos técnicos/manuales del borrador.
+- Snapshot ampliado de componentes y relaciones de hardware por tipo de activo.
+- Integración del tipo de activo industrial personalizado.
+- Firmas, aprobación, bloqueo y generación del PDF institucional.
 - Captura genérica de activos y componentes por itemtype.
 - Gestión de evidencias y firmas.
 - Máquina de estados y bloqueo de registros firmados.
