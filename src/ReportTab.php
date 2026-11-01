@@ -30,7 +30,7 @@ final class ReportTab extends CommonGLPI
             return true;
         }
 
-        if (!\\Session::haveRight(Report::$rightname, READ)) {
+        if (!\Session::haveRight(Report::$rightname, READ)) {
             echo "<div class='alert alert-warning'>" . htmlspecialchars(__('No tiene permisos para consultar informes técnicos.', 'informeglopi'), ENT_QUOTES, 'UTF-8') . '</div>';
             return true;
         }
@@ -42,7 +42,7 @@ final class ReportTab extends CommonGLPI
         echo "<div class='card mb-3'><div class='card-header d-flex justify-content-between align-items-center'>";
         echo '<strong>' . htmlspecialchars(__('Historial de informes técnicos', 'informeglopi'), ENT_QUOTES, 'UTF-8') . '</strong>';
 
-        if (\\Session::haveRight(Report::$rightname, CREATE)) {
+        if (\Session::haveRight(Report::$rightname, CREATE)) {
             $createUrl = '/plugins/informeglopi/front/report.form.php?itemtype=' . rawurlencode($itemtype) . '&items_id=' . $itemsId;
             echo "<a class='btn btn-primary btn-sm' href='" . htmlspecialchars($createUrl, ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars(__('Nuevo informe', 'informeglopi'), ENT_QUOTES, 'UTF-8') . '</a>';
         }
@@ -95,7 +95,7 @@ final class ReportTab extends CommonGLPI
             ],
             'ORDER' => ['id DESC'],
         ]) as $row) {
-            if (!\\Session::haveAccessToEntity(
+            if (!\Session::haveAccessToEntity(
                 (int) ($row['entities_id'] ?? -1),
                 (bool) ($row['is_recursive'] ?? false)
             )) {
