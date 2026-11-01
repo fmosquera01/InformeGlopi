@@ -7,6 +7,9 @@
 - Se registra la creación en la tabla de auditoría.
 - Se habilita el botón Nuevo informe desde la pestaña del activo.
 - Se incorpora la vista de lectura del informe y su snapshot.
+- Se agrega edición de borradores para el creador o perfiles con derecho de actualización.
+- Se agregan campos de clasificación de daño, valor en libros, diagnóstico, antecedentes, causa, actividades y recomendaciones.
+- Se registra auditoría de los cambios realizados.
 
 ## 0.2.0 - Base de datos y permisos GLPI
 - Se crea el esquema inicial para informes, correlativos anuales, firmas, evidencias y auditoría.
