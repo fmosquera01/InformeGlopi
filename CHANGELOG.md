@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.1 - Correcciones de integración
+- Se conecta el registro dinámico de activos con el registro de pestañas GLPI.
+- Se corrige la referencia de la clase base Asset y la navegación de retorno a la ficha de activos genéricos.
+
+
 ## 0.5.0 - Activos nativos y Asset Definitions
 - Se incorpora un registro dinámico de activos nativos y clases generadas por Asset Definitions activas.
 - La pestaña de historial y el servicio de creación usan el mismo registro, eliminando la allowlist cerrada de cinco tipos.
