@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use GlpiPlugin\Informeglopi\AssetTypeRegistry;
 use GlpiPlugin\Informeglopi\ReportService;
 
 include('../../../inc/includes.php');
