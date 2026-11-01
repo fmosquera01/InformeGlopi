@@ -7,7 +7,11 @@
  * Internal plugin key and installation directory: informeglopi
  */
 
-define('PLUGIN_INFORMEGLOPI_VERSION', '0.1.0');
+define('PLUGIN_INFORMEGLOPI_VERSION', '0.2.0');
+
+require_once __DIR__ . '/src/Report.php';
+require_once __DIR__ . '/src/Profile.php';
+require_once __DIR__ . '/src/ReportTab.php';
 
 /**
  * Initialize plugin hooks.
@@ -18,8 +22,15 @@ function plugin_init_informeglopi(): void
 {
     global $PLUGIN_HOOKS;
 
-    // Hooks, item tabs and profile integration will be registered
-    // here as their corresponding classes are implemented.
+    Plugin::registerClass(\\GlpiPlugin\\Informeglopi\\Profile::class, [
+        'addtabon' => ['Profile'],
+    ]);
+
+    Plugin::registerClass(\\GlpiPlugin\\Informeglopi\\ReportTab::class, [
+        'addtabon' => [
+            'Computer', 'Phone', 'Printer', 'Monitor', 'NetworkEquipment',
+        ],
+    ]);
 }
 
 /**
