@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use GlpiPlugin\\Informeglopi\\Report;
+use GlpiPlugin\Informeglopi\Report;
 
 Session::checkLoginUser();
 
