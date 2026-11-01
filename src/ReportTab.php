@@ -101,6 +101,8 @@ final class ReportTab extends CommonGLPI
                 'status',
                 'date_creation',
                 'users_id',
+                'entities_id',
+                'is_recursive',
             ],
             'FROM' => 'glpi_plugin_informeglopi_reports',
             'WHERE' => [
@@ -109,6 +111,12 @@ final class ReportTab extends CommonGLPI
             ],
             'ORDER' => ['id DESC'],
         ]) as $row) {
+            if (!\\Session::haveAccessToEntity(
+                (int) ($row['entities_id'] ?? -1),
+                (bool) ($row['is_recursive'] ?? false)
+            )) {
+                continue;
+            }
             $row['creator_name'] = '—';
             $userId = (int) ($row['users_id'] ?? 0);
             if ($userId > 0) {
