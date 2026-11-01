@@ -41,20 +41,11 @@ final class ReportService
         $entityId = (int) ($item->fields['entities_id'] ?? Session::getActiveEntity());
         $isRecursive = (int) ($item->fields['is_recursive'] ?? 0);
 
-        $snapshotFields = [];
-        foreach (($item->fields ?? []) as $key => $value) {
-            if (is_scalar($value) || $value === null) {
-                $snapshotFields[(string) $key] = $value;
-            }
-        }
-        $snapshotJson = json_encode([
-            'schema_version' => 1,
-            'captured_at' => date('Y-m-d H:i:s'),
-            'itemtype' => $itemtype,
-            'items_id' => $itemsId,
-            'asset_name' => (string) ($item->fields['name'] ?? ''),
-            'fields' => $snapshotFields,
-        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
+        $snapshot = AssetSnapshotBuilder::build($item);
+        $snapshotJson = json_encode(
+            $snapshot,
+            JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR
+        );
 
         $DB->beginTransaction();
         try {
