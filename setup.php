@@ -1,10 +1,9 @@
 <?php
+declare(strict_types=1);
 
 /**
- * Informe Técnico - Songa
- *
- * Plugin nativo para GLPI 11.
- * Internal plugin key and installation directory: informeglopi
+ * Informe Técnico - Songa.
+ * Internal plugin key and installation directory: informeglopi.
  */
 
 define('PLUGIN_INFORMEGLOPI_VERSION', '0.2.0');
@@ -13,31 +12,25 @@ require_once __DIR__ . '/src/Report.php';
 require_once __DIR__ . '/src/Profile.php';
 require_once __DIR__ . '/src/ReportTab.php';
 
-/**
- * Initialize plugin hooks.
- *
- * @return void
- */
 function plugin_init_informeglopi(): void
 {
     global $PLUGIN_HOOKS;
 
-    Plugin::registerClass(\\GlpiPlugin\\Informeglopi\\Report::class);\n\n    Plugin::registerClass(\\GlpiPlugin\\Informeglopi\\Profile::class, [
+    Plugin::registerClass(\GlpiPlugin\Informeglopi\Report::class);
+    Plugin::registerClass(\GlpiPlugin\Informeglopi\Profile::class, [
         'addtabon' => ['Profile'],
     ]);
-
     Plugin::registerClass(\GlpiPlugin\Informeglopi\ReportTab::class, [
         'addtabon' => [
-            'Computer', 'Phone', 'Printer', 'Monitor', 'NetworkEquipment',
+            'Computer',
+            'Phone',
+            'Printer',
+            'Monitor',
+            'NetworkEquipment',
         ],
     ]);
 }
 
-/**
- * Return plugin metadata.
- *
- * @return array<string, mixed>
- */
 function plugin_version_informeglopi(): array
 {
     return [
@@ -58,11 +51,6 @@ function plugin_version_informeglopi(): array
     ];
 }
 
-/**
- * Check plugin prerequisites.
- *
- * @return bool
- */
 function plugin_informeglopi_check_prerequisites(): bool
 {
     if (!defined('GLPI_VERSION')) {
@@ -73,13 +61,6 @@ function plugin_informeglopi_check_prerequisites(): bool
         && version_compare(GLPI_VERSION, '12.0.0', '<');
 }
 
-/**
- * Check plugin configuration.
- *
- * @param bool $verbose
- *
- * @return bool
- */
 function plugin_informeglopi_check_config($verbose = false): bool
 {
     return true;
