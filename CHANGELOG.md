@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0 - Snapshot detallado de componentes
+- Se incorpora `AssetSnapshotBuilder` para separar la captura histórica de datos del servicio de informes.
+- En computadores se capturan procesadores, memorias, discos, tarjetas de red y MAC, gráficos, sonido, controladoras, baterías y sistemas operativos relacionados.
+- Se conserva el registro de campos generales del activo y se amplía el snapshot a la versión de esquema 2.
+- Se utilizan las clases de relación y tablas proporcionadas por GLPI, evitando asumir nombres de tablas manualmente.
+
+
 ## 0.3.0 - Creación de borradores
 - Se agrega un servicio para crear borradores de forma transaccional.
 - Se incorpora numeración anual correlativa con formato ITSISAAAA-NNN.
