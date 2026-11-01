@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0 - Creación de borradores
+- Se agrega un servicio para crear borradores de forma transaccional.
+- Se incorpora numeración anual correlativa con formato ITSISAAAA-NNN.
+- Se captura un snapshot JSON de los campos escalares disponibles del activo.
+- Se registra la creación en la tabla de auditoría.
+- Se habilita el botón Nuevo informe desde la pestaña del activo.
+- Se incorpora la vista de lectura del informe y su snapshot.
+
 ## 0.2.0 - Base de datos y permisos GLPI
 - Se crea el esquema inicial para informes, correlativos anuales, firmas, evidencias y auditoría.
 - Se registran derechos nativos de GLPI para consulta/edición y aprobación.
