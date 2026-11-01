@@ -17,6 +17,8 @@ function plugin_init_informeglopi(): void
 {
     global $PLUGIN_HOOKS;
 
+    $PLUGIN_HOOKS['csrf_compliant']['informeglopi'] = true;
+
     Plugin::registerClass(\GlpiPlugin\Informeglopi\Report::class);
     Plugin::registerClass(\GlpiPlugin\Informeglopi\Profile::class, [
         'addtabon' => ['Profile'],
