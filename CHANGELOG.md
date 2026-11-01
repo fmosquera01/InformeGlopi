@@ -1,9 +1,13 @@
 # Changelog
 
-## 0.1.0 - Base inicial
+## 0.2.0 - Base de datos y permisos GLPI
+- Se crea el esquema inicial para informes, correlativos anuales, firmas, evidencias y auditoría.
+- Se registran derechos nativos de GLPI para consulta/edición y aprobación.
+- Se agrega pestaña de perfiles y pestaña de historial en activos principales.
+- Se agrega la entidad CommonDBTM para informes.
+- La desinstalación deja intactos los registros documentales.
 
-- Creado el arranque del plugin compatible con GLPI 11.x.
-- Definida la clave interna `informeglopi`.
-- Añadidos los puntos de entrada `setup.php` y `hook.php`.
-- Documentados los requisitos funcionales y las reglas de integridad documental.
-- No se crean todavía tablas ni permisos; no hay funciones de usuario implementadas.
+## 0.1.0 - Base inicial
+- Estructura inicial del plugin.
+- Metadatos y requisitos GLPI/PHP.
+- Documentación de requerimientos funcionales.
