@@ -12,7 +12,7 @@ final class Report extends CommonDBTM
 {
     public static string $rightname = 'plugin_informeglopi';
 
-    public function getTable(): string
+    public static function getTable($classname = null): string
     {
         return 'glpi_plugin_informeglopi_reports';
     }
